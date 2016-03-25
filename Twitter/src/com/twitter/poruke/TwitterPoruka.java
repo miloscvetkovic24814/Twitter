@@ -37,7 +37,8 @@ public class TwitterPoruka {
 	 * @throws RuntimeException
 	 *             ako je uneti korisnik null ili prazan String.
 	 * 
-	 * @param korisnik Predstavlja ime korisnika (nalog).
+	 * @param korisnik
+	 *            Predstavlja ime korisnika (nalog).
 	 */
 	public void setKorisnik(String korisnik) {
 		if (korisnik == null || korisnik == "")
@@ -52,7 +53,9 @@ public class TwitterPoruka {
 	 */
 
 	public String getPoruka() {
-		return "poruka";
+		// Mana se manifestovala jer je metoda vracala String "poruka" umesto
+		// sadrzinu promenljive poruka, pa je to izmenjeno.
+		return poruka;
 	}
 
 	/**
@@ -61,10 +64,15 @@ public class TwitterPoruka {
 	 * @throws RuntimeException
 	 *             ako je uneta poruka null ili veca od 140 karaktera.
 	 * 
-	 * @param poruka Predstavlja sadrzinu poruke (tvita).
+	 * @param poruka
+	 *            Predstavlja sadrzinu poruke (tvita).
 	 */
 	public void setPoruka(String poruka) {
-		if (poruka == null || this.poruka.length() > 140)
+		// Mana se nalazila u uslovu, ispitivana je pogresna promenljiva
+		// this.poruka umesto poruka, pa je to trebalo prvo izmeniti (padali su
+		// testovi za slucaj kada je sve u redu, kada je String prazan i
+		// toString metoda).
+		if (poruka == null || poruka.length() > 140)
 			throw new RuntimeException("Poruka mora biti uneta i mora imati najvise 140 znakova");
 		this.poruka = poruka;
 	}
@@ -74,6 +82,8 @@ public class TwitterPoruka {
 	 * sadrzinu poruke.
 	 */
 	public String toString() {
+		// Kao sto je vec receno test je padao jer se nalazila mana u uslovu
+		// metode setPoruka (this.poruka umesto poruka).
 		return "KORISNIK:" + korisnik + " PORUKA:" + poruka;
 	}
 
