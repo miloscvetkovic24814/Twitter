@@ -36,19 +36,33 @@ public class Twitter {
 	 *            Predstavlja sadrzinu same poruke.
 	 */
 	public void unesi(String korisnik, String poruka) {
+		// Mana je bila nedostatak uslova koji bi proverio da li su uneti
+		// korisnik ili poruka null, takodje potrebno je bilo proveriti da li je
+		// korisnik prazan String i da li je poruka duza od 140 karaktera. To je
+		// sve ispravljeno.
+		if (korisnik == null || poruka == null || korisnik.isEmpty() || poruka.length() > 140) {
+			throw new RuntimeException("Korisnik i poruka moraju da postoje.");
+		}
+
 		// Pravi se nova poruka i puni podacima.
 		TwitterPoruka tp = new TwitterPoruka();
-		tp.setKorisnik("korisnik");
+
+		// Mana je bila to sto se unosio "korisnik" a ne sadrzaj promenljive
+		// korisnik. To je ispravljeno.
+		tp.setKorisnik(korisnik);
 		tp.setPoruka(poruka);
 		// Poruka se unosi u listu na kraj
 		poruke.addLast(tp);
 	}
 
 	/**
-	 * Metoda trazi odredjeni broj poruka koje sadrze zadati tag i njima puni niz koji zatim vraca kao povratnu vrednost.
+	 * Metoda trazi odredjeni broj poruka koje sadrze zadati tag i njima puni
+	 * niz koji zatim vraca kao povratnu vrednost.
 	 * 
-	 * @param maxBroj Predstavlja maksimalan broj poruka koje sadrze zadati tag.
-	 * @param tag Predstavlja tag koji sadrze trazene poruke.
+	 * @param maxBroj
+	 *            Predstavlja maksimalan broj poruka koje sadrze zadati tag.
+	 * @param tag
+	 *            Predstavlja tag koji sadrze trazene poruke.
 	 * @return TwitterPoruka[] Predstavlja niz zahtevanih poruka (tvitova).
 	 */
 	public TwitterPoruka[] vratiPoruke(int maxBroj, String tag) {
@@ -69,7 +83,13 @@ public class Twitter {
 		for (int i = 0; i < poruke.size(); i++)
 			if (poruke.get(i).getPoruka().indexOf(tag) != -1)
 				if (brojac < maxBroj) {
-					rezultat[brojac + 1] = poruke.get(i);
+
+					// Metoda je imala manu jer je niz popunjavan na svako drugo
+					// mesto stoga se javljao ArrayIndexOutOfBoundsException
+					// (npr. kada imamo 150 istih poruka a maxBroj je bio
+					// 100). Svako drugo mesto se popunjava i dolazi do
+					// pomenutog izuzetka. To je ispravljeno.
+					rezultat[brojac] = poruke.get(i);
 					brojac++;
 				} else
 					break;

@@ -72,6 +72,11 @@ public class TwitterPoruka {
 		// this.poruka umesto poruka, pa je to trebalo prvo izmeniti (padali su
 		// testovi za slucaj kada je sve u redu, kada je String prazan i
 		// toString metoda).
+		//
+		// NAPOMENA: test kada je poruka prazan String je
+		// prosao pa nisam menjao uslov, nemam tviter nalog ali na primer email
+		// mozemo da posaljemo bez teksta pa sam zato ostavio nepromenjeno jer
+		// ne znam da li ista pravila vaze i za tviter.
 		if (poruka == null || poruka.length() > 140)
 			throw new RuntimeException("Poruka mora biti uneta i mora imati najvise 140 znakova");
 		this.poruka = poruka;

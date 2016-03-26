@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class TwitterPorukaTest {
 	
-	TwitterPoruka tviterPoruka;
+	private TwitterPoruka tviterPoruka;
 
 	@Before
 	public void setUp() throws Exception {
